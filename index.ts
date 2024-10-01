@@ -11,6 +11,10 @@ const run = async () => {
 
 	const slug = name.toLowerCase().replace(/ /g, '-').replace(/[^a-z0-9-]/g, '');
 
+	const getScript = (data:string) => {
+		return `(() => "${data}")`;
+	}
+
 	// check if file is a URL
 	if (file.startsWith("http")) {
 		// download the file
@@ -20,7 +24,7 @@ const run = async () => {
 		const prefix = `data:${response.headers.get("content-type")};base64,`;
 
 		await Bun.write(`tracks/${slug}.${ext}`, data);
-		await Bun.write(`tracks/${slug}.txt`, prefix + Buffer.from(data).toString("base64"));
+		await Bun.write(`tracks/${slug}.js`, getScript(prefix + Buffer.from(data).toString("base64")));
 	} else {
 		// check if file exists
 		if (!await Bun.file(file).exists()) {
@@ -33,7 +37,7 @@ const run = async () => {
 		const prefix = `data:${await Bun.file(file).type};base64,`;
 
 		await Bun.write(`tracks/${slug}.${ext}`, data);
-		await Bun.write(`tracks/${slug}.txt`, prefix + Buffer.from(data).toString("base64"));
+		await Bun.write(`tracks/${slug}.js`, prefix + Buffer.from(data).toString("base64"));
 	}
 
 	const tracks = await Bun.file('tracks/tracks.json').json();
@@ -44,6 +48,7 @@ const run = async () => {
 	}
 
 	await Bun.write('tracks/tracks.json', JSON.stringify(tracks, null, 2));
+	await Bun.write('tracks/tracks.js', '(() => (window._AFTracks = ' + JSON.stringify(tracks, null, 2) + '))()');
 
 	console.log("File converted successfully");
 }
