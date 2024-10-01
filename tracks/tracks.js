@@ -11,4 +11,5 @@
     "name": "Epoq-Lepidoptera",
     "path": "tracks/epoq-lepidoptera.txt"
   }
-}))()
+}))();
+console.log("Tracks loaded");
