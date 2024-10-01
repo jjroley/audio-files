@@ -50,7 +50,7 @@ const run = async () => {
 	}
 
 	await Bun.write('tracks/tracks.json', JSON.stringify(tracks, null, 2));
-	await Bun.write('tracks/tracks.js', '(() => (window._AFTracks = ' + JSON.stringify(tracks, null, 2) + '))()');
+	await Bun.write('tracks/tracks.js', '(() => (window._AFTracksList = ' + JSON.stringify(tracks, null, 2) + '))()');
 
 	console.log("File converted successfully");
 }
