@@ -17,9 +17,10 @@ const run = async () => {
 		const response = await fetch(file);
 		const data = new Uint8Array(await response.arrayBuffer());
 		const ext = file.split('.').pop();
+		const prefix = `data:${response.headers.get("content-type")};base64,`;
 
 		await Bun.write(`tracks/${slug}.${ext}`, data);
-		await Bun.write(`tracks/${slug}.txt`, Buffer.from(data).toString("base64"));
+		await Bun.write(`tracks/${slug}.txt`, prefix + Buffer.from(data).toString("base64"));
 	} else {
 		// check if file exists
 		if (!await Bun.file(file).exists()) {
@@ -29,9 +30,10 @@ const run = async () => {
 
 		const data = await Bun.file(file).arrayBuffer();
 		const ext = file.split('.').pop();
+		const prefix = `data:${await Bun.file(file).type};base64,`;
 
 		await Bun.write(`tracks/${slug}.${ext}`, data);
-		await Bun.write(`tracks/${slug}.txt`, Buffer.from(data).toString("base64"));
+		await Bun.write(`tracks/${slug}.txt`, prefix + Buffer.from(data).toString("base64"));
 	}
 
 	const tracks = await Bun.file('tracks/tracks.json').json();
