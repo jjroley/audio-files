@@ -44,7 +44,7 @@ const run = async () => {
 
 	tracks[slug] = {
 		name: name,
-		path: 'tracks/' + slug + '.txt',
+		path: 'tracks/' + slug + '.js',
 	}
 
 	await Bun.write('tracks/tracks.json', JSON.stringify(tracks, null, 2));

@@ -9,7 +9,6 @@
   },
   "epoq-lepidoptera": {
     "name": "Epoq-Lepidoptera",
-    "path": "tracks/epoq-lepidoptera.txt"
+    "path": "tracks/epoq-lepidoptera.js"
   }
-}))();
-console.log("Tracks loaded");
+}))()
