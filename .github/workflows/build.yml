@@ -31,7 +31,7 @@ jobs:
 
     - name: Merge main into release
       run: |
-        git merge origin/main --no-edit --strategy-option theirs || true
+        git merge origin/main --no-edit --allow-unrelated-histories --strategy-option theirs || true
 
     - name: Add and commit bundled files
       run: |
