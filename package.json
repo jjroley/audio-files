@@ -2,7 +2,7 @@
   "name": "audio-files",
   "module": "index.ts",
   "type": "module",
-  "version": "0.0.3",
+  "version": "0.0.6",
   "scripts": {
     "convert": "bun run load-audio.ts",
     "build": "bun build.ts"
