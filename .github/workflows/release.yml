@@ -1,9 +1,10 @@
 name: Create Release
 
 on:
-  push:
-    branches:
-      - release
+  workflow_run:
+    workflows: ["Bundle and send to release"]
+    types:
+      - completed
 
 jobs:
   create-release:
