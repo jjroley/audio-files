@@ -13,8 +13,13 @@ jobs:
       - name: Checkout release branch
         uses: actions/checkout@v4
         with:
-          ref: release  # Ensure we're working with the release branch
+          ref: release
           fetch-depth: 0
+
+      - name: Reset release branch to main
+        run: |
+          git fetch origin main
+          git checkout -B release origin/main
 
       - name: Set up Bun
         uses: oven-sh/setup-bun@v2
