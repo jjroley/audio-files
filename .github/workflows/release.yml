@@ -1,0 +1,45 @@
+name: Create Release
+
+on:
+  workflow_run:
+    workflows: ["Bundle and send to release"]
+    types:
+      - completed
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout release branch
+        uses: actions/checkout@v4
+        with:
+          ref: release
+          fetch-depth: 0
+
+      - name: Get the latest commit SHA
+        id: get_commit_sha
+        run: |
+          COMMIT_SHA=$(git rev-parse HEAD)
+          echo "COMMIT_SHA=$COMMIT_SHA" >> $GITHUB_ENV
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.1.25
+
+      - name: Get version from package.json
+        id: get_version
+        run: |
+          VERSION=$(echo "console.log(require('./package.json').version)" | bun run -)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: "v${{ env.VERSION }}"
+          release_name: "Release ${{ env.VERSION }}"
+          commitish: ${{ env.COMMIT_SHA }}
