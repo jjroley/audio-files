@@ -21,9 +21,6 @@ jobs:
       run: |
         NODE_ENV=production bun install
 
-    - name: Bundle assets
-      run: bun run --run build
-
     - name: Checkout release branch
       run: |
         git fetch origin
@@ -34,6 +31,9 @@ jobs:
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git merge origin/main --no-edit --allow-unrelated-histories --strategy-option theirs || true
+
+    - name: Bundle assets
+      run: bun run --run build
 
     - name: Add and commit bundled files
       run: |
