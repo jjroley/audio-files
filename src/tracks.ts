@@ -53,11 +53,8 @@ export default class Tracks {
 				return reject('Track not found')
 			}
 
-			const url = new URL(this.baseURL)
-			url.pathname = this.get(slug).path
-
 			const script = document.createElement('script')
-			script.src   = url.toString()
+			script.src   = this.baseURL + this.get(slug).path
 			script.async = true
 
 			const onload = (e:Event) => {
@@ -75,8 +72,8 @@ export default class Tracks {
 			// listen for message with audio buffer
 			document.addEventListener(`af-audio-loaded-${slug}`, onload)
 
-			script.onerror = (err) => {
-				reject(err)
+			script.onerror = () => {
+				reject('error loading script')
 			}
 			document.head.appendChild(script)
 		})

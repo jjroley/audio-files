@@ -6,12 +6,12 @@ export default class Player {
 	isStarted: boolean = false
 	tracks: Tracks
 
-	constructor(baseURL:string) {
+	constructor(baseURL: string) {
 		this.tracks = new Tracks(baseURL)
 	}
-	
-	async load(slug:string) {
-		if ( ! this.tracks.get(slug) ) {
+
+	async load(slug: string) {
+		if (!this.tracks.get(slug)) {
 			console.error("Track not found")
 			return;
 		}
@@ -32,30 +32,30 @@ export default class Player {
 				.catch(this.handleError.bind(this))
 		} catch (err) {
 			this.handleError(err)
-		}		
+		}
 	}
-	
+
 	loadSource(audioBuffer: AudioBuffer) {
-			this.source = this.audioCtx.createBufferSource();
-			this.source.buffer = audioBuffer;
-			this.source.connect(this.audioCtx.destination);
+		this.source = this.audioCtx.createBufferSource();
+		this.source.buffer = audioBuffer;
+		this.source.connect(this.audioCtx.destination);
 	}
-	
+
 	handleError(err: any) {
-			console.error("Error decoding audio data:", err);
+		console.error("Error decoding audio data:", err);
 	}
-	
+
 	start() {
-			if(this.source) {
-					this.source.start()
-					this.isStarted = true
-			}
+		if (this.source) {
+			this.source.start()
+			this.isStarted = true
+		}
 	}
-	
+
 	stop() {
-			if(this.source) {
-				this.source.stop()
-				this.isStarted = false
-			}
+		if (this.source) {
+			this.source.stop()
+			this.isStarted = false
+		}
 	}
 }

@@ -2,10 +2,11 @@
   "name": "audio-files",
   "module": "index.ts",
   "type": "module",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "scripts": {
     "convert": "bun run load-audio.ts",
-    "build": "esbuild src/index.ts --bundle --minify --sourcemap --target=chrome58,firefox57,safari11,edge16 --outfile=dist/index.js"
+    "build": "esbuild src/index.ts --bundle --minify --sourcemap --target=chrome58,firefox57,safari11,edge16 --outfile=dist/index.js",
+    "dev": "esbuild src/index.ts --bundle --watch --sourcemap --target=chrome58,firefox57,safari11,edge16 --outfile=dist/index.js"
   },
   "devDependencies": {
     "@types/bun": "latest",
