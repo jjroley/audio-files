@@ -3,7 +3,8 @@
   "module": "index.ts",
   "type": "module",
   "scripts": {
-    "convert": "bun run index.ts"
+    "convert": "bun run load-audio.ts",
+    "build": "bun build.ts"
   },
   "devDependencies": {
     "@types/bun": "latest"
